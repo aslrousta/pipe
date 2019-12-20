@@ -70,7 +70,7 @@ func h(x int) (int, error) {
         return 0, err
     }
 
-    return g(y)
+    return g(y), nil
 }
 ```
 
@@ -80,7 +80,9 @@ the number of func's grows.
 To overcome this complexity I've written this library to make life simpler for
 those who love functional style like me. Go Pipe provides a `Pipe` func which
 composes one or more funcs into a pipeline func, which can be invoked anytime
-withing the code. Using `Pipe` func is very simple:
+withing the code.
+
+Using `Pipe` func is very simple:
 
 ```go
 import . "github.com/aslrousta/pipe"
@@ -111,7 +113,7 @@ And, it can handle errors automatically:
 ```go
 import . "github.com/aslrousta/pipe"
 
-func h(x int) int {
+func h(x int) (int, error) {
     var result int
 
     pipe := Pipe(
