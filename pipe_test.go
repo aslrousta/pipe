@@ -2,6 +2,7 @@ package pipe_test
 
 import (
 	"errors"
+	"math/rand"
 	"testing"
 
 	. "github.com/aslrousta/pipe"
@@ -59,5 +60,28 @@ func TestPipe(t *testing.T) {
 		err := pipe(-1)
 		EqualError(t, err, "1st func failed: n must be positive")
 		EqualError(t, errors.Unwrap(err), "n must be positive")
+	})
+}
+
+var result int
+
+func BenchmarkPipe(b *testing.B) {
+	sqr := func(x int) int { return x * x }
+	inc := func(x int) int { return x + 1 }
+
+	x := rand.Intn(1000)
+
+	b.Run("SqrPlusOneDirect", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			result = inc(sqr(x))
+		}
+	})
+
+	b.Run("SqrPlusOnePipe", func(b *testing.B) {
+		pipe := Pipe(sqr, inc, func(x int) { result = x })
+
+		for n := 0; n < b.N; n++ {
+			pipe(x)
+		}
 	})
 }

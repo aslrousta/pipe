@@ -27,6 +27,10 @@ func empty(...interface{}) error { return nil }
 // If a func in the pipeline fails with an error during the invocation, the pipe
 // is broken immediately and the invocation returns an error.
 func Pipe(fs ...interface{}) Pipeline {
+	if len(fs) == 0 {
+		return empty
+	}
+
 	return func(args ...interface{}) (err error) {
 		defer func() {
 			if r := recover(); r != nil {
