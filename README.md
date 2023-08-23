@@ -7,7 +7,7 @@ Go Pipe is a simple implementation of _pipe_ operator in Go.
 
 ## What is it all about?
 
-One of the most intereseting features of functional languages is the ability to
+One of the most interesting features of functional languages is the ability to
 easily compose functions. The function composition is the operation that takes
 two functions and produces another function in the way that the result of the
 second function is passed as the input argument of first one.
